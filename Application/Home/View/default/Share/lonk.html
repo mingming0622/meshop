@@ -1,0 +1,66 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <style>
+        .btn-file{
+            width: 80%; height: 100px; background-color: #0a628f;
+            margin: 20px auto ;
+        }
+        .showImg{
+            width: 100px;
+            height: 100px;;
+            display: block;
+            float: left;
+
+        }
+
+    </style>
+    <header class="jumbotron subhead" id="overview">
+        <div class="container">
+            <h2>{$info.title}</h2>
+            <span>{$info.keywords}</span>
+            <p>
+				<span  class="pull-left">
+					<span class="author">{$info.uid|get_username}</span>
+					<span> 发表于 {$info.creat_time|date='Y-m-d H:i',###}</span>
+				</span>
+
+				<span class="pull-right">
+					<article:prev name="prev" info="info">
+                        <a href="{:U('?id='.$prev['id'])}">上一篇</a>
+                    </article:prev>
+                    <article:next name="next" info="info">
+                        <a href="{:U('?id='.$next['id'])}">下一篇</a>
+                    </article:next>
+				</span>
+            </p>
+        </div>
+    </header>
+</block>
+
+<block name="body">
+    <div class="span9 main-content">
+        <!-- Contents
+        ================================================== -->
+        <section>{$info.title}</section>
+        <hr/>
+        <div class="xm_show_main_left">
+
+            <if condition="info.source_vedio">
+                <!--<video controls="controls" src="{$info.source_vedio}" autoplay="autoplay" loop="loop" width="730" height="430"></video>-->
+                <embed wmode="opaque"wmode="opaque"src="{$info.source_vedio}" allowFullScreen="true" quality="high" width="730" height="430" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+            </if>
+            <section id="contents">{$info.content}</section>
+        </div>
+        <foreach name="info.imgs.path" item="vo" key="ko">
+            <span class="btn-file" style="margin-top: 50px;">
+                <img src="{$vo}" class="showImg" data-id="{$ko}">
+            </span>
+        </foreach>
+
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript"src="__STATIC__/video_js/video-js.swf"></script>
+    <script type="text/javascript"src="__STATIC__/video_js/video.js"></script>
+</block>
